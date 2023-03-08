@@ -21,11 +21,11 @@ npm run dev
   - Verificar a resposta de erro caso o usuário não informe o name
   - Verificar se a função getAllusers está sendo chamada
 
-[ ] Implementa uma validação para o campo email
+[x] Implementa uma validação para o campo email
   - O usuário nâo pode ser criado caso não informe o email
   - Escreva o teste unitário
 
-[ ] Refatorar e implementar a rota para deletar o usuário
+[x] Refatorar e implementar a rota para deletar o usuário
   - Refatore a rota para deletar usuários
   - Escreva os testes unitários necessários
 

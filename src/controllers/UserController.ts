@@ -1,11 +1,12 @@
 import { Request, Response } from 'express'
+import validator from 'validator'
 import { UserService } from '../services/UserService'
 
 export class UserController {
   userService: UserService
 
-  constructor(userService = new UserService()) {
-    this.userService = userService
+  constructor(userServ = new UserService()) {
+    this.userService = userServ
   }
 
   createUser(req: Request, res: Response) {
@@ -13,6 +14,10 @@ export class UserController {
 
     if (!name) {
       return res.status(400).json({ message: 'Invalid name' })
+    }
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email' })
     }
 
     this.userService.createUser(name, email)
@@ -23,5 +28,16 @@ export class UserController {
     const users = this.userService.getAllUsers()
 
     return res.status(200).json(users)
+  }
+
+  deleteUser(req: Request, res: Response) {
+    const { email } = req.body
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email' })
+    }
+
+    this.userService.deleteUser(email)
+    return res.status(200).json({ message: 'User deleted' })
   }
 }

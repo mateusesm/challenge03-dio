@@ -30,4 +30,15 @@ export class UserService {
   getAllUsers() {
     return this.DB
   }
+
+  deleteUser(email: string) {
+    for (let obj of this.DB) {
+      if (obj.email === email) {
+        const index = this.DB.indexOf(obj)
+        this.DB.slice(index, 1)
+      }
+    }
+
+    console.log('DB updated: ', this.DB)
+  }
 }
