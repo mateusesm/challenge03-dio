@@ -1,7 +1,7 @@
 const DB = [
   {
     name: "Joana",
-    email: "joana@mail.com"
+    email: "teste@mail.com"
   }
 ]
 
@@ -28,6 +28,6 @@ export class UserService {
   }
 
   getAllUsers() {
-    return DB
+    return this.DB
   }
 }

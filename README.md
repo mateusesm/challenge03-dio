@@ -16,9 +16,8 @@ npm i
 ```bash
 npm run dev
 ```
-
 #### Desafios
-[ ] Incluir os testes unitários pendentes no controller
+[x] Incluir os testes unitários pendentes no controller
   - Verificar a resposta de erro caso o usuário não informe o name
   - Verificar se a função getAllusers está sendo chamada
 
