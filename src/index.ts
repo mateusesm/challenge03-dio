@@ -1,5 +1,10 @@
 import express, { Request, Response } from 'express'
+import { AppDataSource } from './database'
+import 'reflect-metadata'
+
 import userRoutes from './routes/userRoutes'
+
+
 
 const server = express()
 const PORT = 3000

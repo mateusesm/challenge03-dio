@@ -35,10 +35,9 @@ export class UserService {
     for (let obj of this.DB) {
       if (obj.email === email) {
         const index = this.DB.indexOf(obj)
-        this.DB.slice(index, 1)
+        this.DB.splice(index, 1)
       }
     }
-
     console.log('DB updated: ', this.DB)
   }
 }

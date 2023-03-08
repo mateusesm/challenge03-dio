@@ -49,6 +49,8 @@ describe('Test UserController', () => {
   })
 
   it('should call getAllUsers function', () => {
+    mockRequest.body.name = 'Mateus'
+    mockRequest.body.email = 'teste@mail.com'
     userController.getAllUsers(mockRequest, mockResponse)
 
     expect(mockResponse.state.status).toBe(200)
