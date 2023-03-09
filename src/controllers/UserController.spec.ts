@@ -2,9 +2,11 @@ import { Request } from 'express'
 import { UserController } from './UserController'
 import { UserService } from './../services/UserService'
 import { makeMockResponse } from '../__mocks__/mockResponse.mock'
+import { makeMockRequest } from '../__mocks__/mockRequest.mock'
 
 const mockUserService = {
-  createUser: jest.fn()
+  createUser: jest.fn(),
+  getUser: jest.fn()
 }
 
 jest.mock('../services/UserService', () => {
@@ -64,6 +66,18 @@ describe('Test UserController', () => {
 
     expect(mockResponse.state.status).toBe(400)
     expect(mockResponse.state.json).toMatchObject({ message: 'Invalid password' })
+  })
+
+  it ('should return an user with informed userId', () => {
+    const mockRequest = makeMockRequest({
+      params: {
+        userId: '123456'
+      }
+    })
+
+    userController.getUser(mockRequest, mockResponse)
+    expect(mockUserService.getUser).toHaveBeenCalledWith('123456')
+    expect(mockResponse.state.status).toBe(200)
   })
 
   /* it('should delete user', () => {
