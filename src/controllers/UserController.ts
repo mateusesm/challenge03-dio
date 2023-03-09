@@ -12,7 +12,7 @@ export class UserController {
   }
 
   createUser(req: Request, res: Response) {
-    const { name, email } = req.body
+    const { name, email, password } = req.body
 
     if (!name) {
       return res.status(400).json({ message: 'Invalid name' })
@@ -22,19 +22,19 @@ export class UserController {
       return res.status(400).json({ message: 'Invalid email' })
     }
 
-    const userService2 = new UserService()
-    userService2.createUser(name, email)
+    if (!password) {
+      return res.status(400).json({ message: 'Invalid password' })
+    }
+
+    this.userService.createUser(name, email, password)
     return res.status(201).json({ message: 'User created' })
   }
 
-  getAllUsers(req: Request, res: Response) {
-    // const userService2 = new UserService()
-    const users = this.userService.getAllUsers()
-
-    return res.status(200).json(users)
+  getUser(req: Request, res: Response) {
+    return res.status(200)
   }
 
-  deleteUser(req: Request, res: Response) {
+  /* deleteUser(req: Request, res: Response) {
     const { email } = req.body
 
     if (!validator.isEmail(email)) {
@@ -44,5 +44,5 @@ export class UserController {
     const userService2 = new UserService()
     userService2.deleteUser(email)
     return res.status(200).json({ message: 'User deleted' })
-  }
+  } */
 }

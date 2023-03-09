@@ -2,23 +2,28 @@ import { Request } from 'express'
 import { UserController } from './UserController'
 import { UserService } from './../services/UserService'
 import { makeMockResponse } from '../__mocks__/mockResponse.mock'
-import { IUser } from '../services/UserService'
+
+const mockUserService = {
+  createUser: jest.fn()
+}
+
+jest.mock('../services/UserService', () => {
+  return {
+    UserService: jest.fn().mockImplementation(() => {
+      return mockUserService
+    })
+  }
+})
 
 describe('Test UserController', () => {
-  const mockUserService: Partial<UserService> = {
-    createUser: jest.fn(),
-    getAllUsers: jest.fn(() => {
-      return [{ name: 'Mateus', email: 'teste@mail.com' }]
-    }),
-    deleteUser: jest.fn()
-  }
 
-  const userController = new UserController(mockUserService as UserService)
+  const userController = new UserController()
 
   const mockRequest = {
     body: {
       name: 'Mateus',
-      email: 'teste@mail.com'
+      email: 'teste@mail.com',
+      password: '123456'
     }
   } as Request
 
@@ -33,6 +38,8 @@ describe('Test UserController', () => {
 
   it('should return an error if name were empty in creation', () => {
     mockRequest.body.name = ''
+    mockRequest.body.email = 'teste@mail.com'
+    mockRequest.body.password = '123456'
     userController.createUser(mockRequest, mockResponse)
 
     expect(mockResponse.state.status).toBe(400)
@@ -41,25 +48,28 @@ describe('Test UserController', () => {
 
   it('should return an error if email were invalid in creation', () => {
     mockRequest.body.name = 'Mateus'
-    mockRequest.body.email = 'hahaha'
+    mockRequest.body.email = ''
+    mockRequest.body.password = '123456'
     userController.createUser(mockRequest, mockResponse)
 
     expect(mockResponse.state.status).toBe(400)
     expect(mockResponse.state.json).toMatchObject({ message: 'Invalid email' })
   })
 
-  it('should call getAllUsers function', () => {
+  it('should return an error if password were invalid in creation', () => {
     mockRequest.body.name = 'Mateus'
     mockRequest.body.email = 'teste@mail.com'
-    userController.getAllUsers(mockRequest, mockResponse)
+    mockRequest.body.password = ''
+    userController.createUser(mockRequest, mockResponse)
 
-    expect(mockResponse.state.status).toBe(200)
-    expect(mockResponse.state.json).toMatchObject([{ name: 'Mateus', email: 'teste@mail.com' }])
+    expect(mockResponse.state.status).toBe(400)
+    expect(mockResponse.state.json).toMatchObject({ message: 'Invalid password' })
   })
 
-  it('should delete user', () => {
+  /* it('should delete user', () => {
     mockRequest.body.name = 'Mateus'
     mockRequest.body.email = 'teste@mail.com'
+    mockRequest.body.password = '123456'
     userController.deleteUser(mockRequest, mockResponse)
 
     expect(mockResponse.state.status).toBe(200)
@@ -68,11 +78,13 @@ describe('Test UserController', () => {
 
   it('should return an error if email were invalid in deletation', () => {
     mockRequest.body.name = 'Mateus'
-    mockRequest.body.email = 'hahaha'
+    mockRequest.body.email = ''
+    mockRequest.body.password = '123456'
     userController.deleteUser(mockRequest, mockResponse)
 
     expect(mockResponse.state.status).toBe(400)
     expect(mockResponse.state.json).toMatchObject({ message: 'Invalid email' })
   })
+  */
 
 })

@@ -1,17 +1,24 @@
 import { EntityManager } from "typeorm";
-import { AppDataSource } from "../database";
-import { IUser } from "../services/UserService";
+import { User } from "../entities/User";
 
 export class UserRepository {
   private manager: EntityManager
 
   constructor(
-    manager = AppDataSource.manager
+    manager: EntityManager
   ) {
     this.manager = manager
   }
 
-  async createUser(user: IUser) {
+  async createUser(user: User): Promise<User> {
     return this.manager.save(user)
+  }
+
+  async getUser(userId: string): Promise<User | null> {
+    return this.manager.findOne(User, {
+      where: {
+        id_user: userId,
+      }
+    })
   }
 }
