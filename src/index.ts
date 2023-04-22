@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { AppDataSource } from './database'
 import 'reflect-metadata'
+import cors from 'cors'
 
 import userRoutes from './routes/userRoutes'
 import loginRoutes from './routes/loginRoutes'
@@ -9,6 +10,7 @@ const server = express()
 const PORT = 3000
 
 server.use(express.json())
+server.use(cors())
 server.use('/user', userRoutes)
 server.use('/login', loginRoutes)
 
