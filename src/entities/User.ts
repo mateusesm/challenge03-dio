@@ -14,16 +14,21 @@ export class User {
   email: string
 
   @Column({ nullable: false })
+  balance: number
+
+  @Column({ nullable: false })
   password: string
 
   constructor(
     name: string,
     email: string,
+    balance: number,
     password: string
   ) {
     this.id_user = randomUUID()
     this.name = name
     this.email = email
+    this.balance = balance
     this.password = password
   }
 }

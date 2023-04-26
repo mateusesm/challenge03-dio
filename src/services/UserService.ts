@@ -12,8 +12,8 @@ export class UserService {
     this.userRepository = userRepository
   }
 
-  async createUser(name: string, email: string, password: string): Promise<User> {
-    const user = new User(name, email, password)
+  async createUser(name: string, email: string, balance: number, password: string): Promise<User> {
+    const user = new User(name, email, balance, password)
     return this.userRepository.createUser(user)
   }
 
@@ -45,6 +45,6 @@ export class UserService {
 
     const token = sign(tokenData, tokenKey, tokenOptions)
 
-    return token
+    return { token, id: user.id_user } as any
   }
 }

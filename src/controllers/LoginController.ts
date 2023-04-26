@@ -15,9 +15,9 @@ export class LoginController {
     const { email, password } = req.body
 
     try {
-      const token = await this.userService.getToken(email, password)
+      const objTokenAndIdUser = await this.userService.getToken(email, password)
 
-      return res.status(200).json({ token })
+      return res.status(200).json(objTokenAndIdUser)
     } catch (error) {
       return res.status(500).json({ message: 'Email/password invalid!'})
     }

@@ -12,7 +12,7 @@ export class UserController {
   }
 
   createUser(req: Request, res: Response) {
-    const { name, email, password } = req.body
+    const { name, email, balance, password } = req.body
 
     if (!name) {
       return res.status(400).json({ message: 'Invalid name' })
@@ -26,7 +26,7 @@ export class UserController {
       return res.status(400).json({ message: 'Invalid password' })
     }
 
-    this.userService.createUser(name, email, password)
+    this.userService.createUser(name, email, balance, password)
     return res.status(201).json({ message: 'User created' })
   }
 
@@ -38,7 +38,8 @@ export class UserController {
     return res.status(200).json({
       userId: user?.id_user,
       name: user?.name,
-      email: user?.email
+      email: user?.email,
+      balance: user?.balance
     })
   }
 
