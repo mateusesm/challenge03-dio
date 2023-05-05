@@ -45,6 +45,6 @@ export class UserService {
 
     const token = sign(tokenData, tokenKey, tokenOptions)
 
-    return { token, id: user.id_user } as any
+    return { id: user.id_user, token } as any
   }
 }
