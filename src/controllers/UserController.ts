@@ -36,7 +36,7 @@ export class UserController {
     const user = await this.userService.getUser(userId)
 
     return res.status(200).json({
-      userId: user?.id_user,
+      id: user?.id_user,
       name: user?.name,
       email: user?.email,
       balance: user?.balance
