@@ -1,4 +1,5 @@
-import { sign } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken'
+
 import { AppDataSource } from '../database'
 import { User } from '../entities/User'
 import { UserRepository } from './../repositories/UserRepository'
@@ -22,7 +23,7 @@ export class UserService {
   }
 
   getAuthenticatedUser(email: string, password: string): Promise<User | null> {
-    return this.userRepository.getUserByEmailAndPassword(email, password)
+    return this.userRepository.getUserByEmail(email, password)
   }
 
   async getToken(email: string, password: string): Promise<string> {
